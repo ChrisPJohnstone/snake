@@ -33,16 +33,17 @@ void Setup(){
     snakeDirection = STOP;
     snakeX = boardWidth / 2;
     snakeY = boardHeight / 2;
-    fruitX = rand() %boardWidth;
-    fruitY = rand() %boardHeight;
+    fruitX = (rand() % (boardWidth - 1)) + 1;
+    fruitY = (rand() % (boardHeight - 1)) + 1;
 }
+
 void Draw(){
     system("CLS");
-    for (int row = 0; row < boardHeight; row++) {
-        for (int column = 0; column < boardWidth; column++) {
-            if (row == 0 || row == boardHeight - 1) {
+    for (int row = 0; row <= boardHeight; row++) {
+        for (int column = 0; column <= boardWidth; column++) {
+            if (row == 0 || row == boardHeight) {
                 cout << wallChar;
-            } else if (column == 0 || column == boardWidth - 1) {
+            } else if (column == 0 || column == boardWidth) {
                 cout << wallChar;
             } else if (row == snakeY && column == snakeX) {
                 cout << snakeHeadChar;
@@ -55,6 +56,7 @@ void Draw(){
         cout << endl;
     }
 }
+
 void Input(){
     if (_kbhit()) {
         switch(_getch()) {
@@ -75,6 +77,7 @@ void Input(){
         }
     }
 }
+
 void Logic(){
     switch(snakeDirection) {
         case UP:
@@ -91,6 +94,14 @@ void Logic(){
             break;
         default:
             break;
+    }
+    
+    if (snakeX < 0 || snakeX > boardWidth || snakeY < 0 || snakeY > boardHeight) {
+        gameOver = true;
+    } else if (snakeX == fruitX && snakeY == fruitY) {
+        score += 10;
+        fruitX = (rand() % (boardWidth - 1)) + 1;
+        fruitY = (rand() % (boardHeight - 1)) + 1;
     }
 }
 
