@@ -96,7 +96,12 @@ void Logic(){
             break;
     }
     
-    if (snakeX < 0 || snakeX > boardWidth || snakeY < 0 || snakeY > boardHeight) {
+    if (
+        snakeX <= 0 ||
+        snakeX >= boardWidth ||
+        snakeY <= 0 ||
+        snakeY >= boardHeight
+    ) {
         gameOver = true;
     } else if (snakeX == fruitX && snakeY == fruitY) {
         score += 10;
