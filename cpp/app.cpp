@@ -72,16 +72,16 @@ void Input(){
     if (_kbhit()) {
         switch(_getch()) {
         case dirUpChar:
-            snakeDirection = UP;
+            if (snakeDirection != DOWN) {snakeDirection = UP;}
             break;
         case dirDownChar:
-            snakeDirection = DOWN;
+            if (snakeDirection != UP) {snakeDirection = DOWN;}
             break;
         case dirLeftChar:
-            snakeDirection = LEFT;
+            if (snakeDirection != RIGHT) {snakeDirection = LEFT;}
             break;
         case dirRightChar:
-            snakeDirection = RIGHT;
+            if (snakeDirection != LEFT) {snakeDirection = RIGHT;}
             break;
         default:
             break;
@@ -104,7 +104,7 @@ void Logic(){
         prevX = prevX2;
         prevY = prevY2;
     }
-    
+
     switch(snakeDirection) {
         case UP:
             snakeY--;
@@ -152,4 +152,3 @@ int main(){
     }
     return 0;
 }
-
