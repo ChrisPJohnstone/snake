@@ -26,7 +26,7 @@ enum eDirection {
     RIGHT,
 };
 
-int snakeX, snakeY, fruitX, fruitY, score;
+int snakeX, snakeY, fruitX, fruitY;
 int tailX[100], tailY[100], nTail;
 eDirection snakeDirection;
 
@@ -131,7 +131,6 @@ void Logic(){
         gameOver = true;
     } else if (snakeX == fruitX && snakeY == fruitY) {
         nTail += 1;
-        score += 10;
         fruitX = (rand() % (boardWidth - 1)) + 1;
         fruitY = (rand() % (boardHeight - 1)) + 1;
     } else {
