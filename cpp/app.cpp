@@ -10,10 +10,8 @@ const char wallChar = '#';
 const char snakeHeadChar = '0';
 const char fruitChar = 'F';
 
-const int height = 20;
-const int width = 20;
-
-int snakeX, snakeY, fruitX, fruitY, score;
+const int boardHeight = 20;
+const int boardWidth = 20;
 
 const char dirUpChar = 'w';
 const char dirDownChar = 's';
@@ -26,23 +24,25 @@ enum eDirection {
     LEFT,
     RIGHT,
 };
+
+int snakeX, snakeY, fruitX, fruitY, score;
 eDirection snakeDirection;
 
 void Setup(){
     gameOver=false;
     snakeDirection = STOP;
-    snakeX = width / 2;
-    snakeY = height / 2;
-    fruitX = rand() %width;
-    fruitY = rand() %height;
+    snakeX = boardWidth / 2;
+    snakeY = boardHeight / 2;
+    fruitX = rand() %boardWidth;
+    fruitY = rand() %boardHeight;
 }
 void Draw(){
     system("CLS");
-    for (int row = 0; row < height; row++) {
-        for (int column = 0; column < width; column++) {
-            if (row == 0 || row == height - 1) {
+    for (int row = 0; row < boardHeight; row++) {
+        for (int column = 0; column < boardWidth; column++) {
+            if (row == 0 || row == boardHeight - 1) {
                 cout << wallChar;
-            } else if (column == 0 || column == width - 1) {
+            } else if (column == 0 || column == boardWidth - 1) {
                 cout << wallChar;
             } else if (row == snakeY && column == snakeX) {
                 cout << snakeHeadChar;
