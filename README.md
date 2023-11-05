@@ -1,2 +1,2 @@
 # Snake
-The game snake, made in C++ for educiational purposes
+I'm making the game snake in various languages to see how they compare
