@@ -15,6 +15,10 @@ const int width = 20;
 
 int snakeX, snakeY, fruitX, fruitY, score;
 
+const char dirUpChar = 'w';
+const char dirDownChar = 's';
+const char dirLeftChar = 'a';
+const char dirRightChar = 'd';
 enum eDirection {
     STOP=0,
     UP,
@@ -22,14 +26,11 @@ enum eDirection {
     LEFT,
     RIGHT,
 };
-const char dirUpChar = 'w';
-const char dirDownChar = 's';
-const char dirLeftChar = 'a';
-const char dirRightChar = 'd';
+eDirection snakeDirection;
 
 void Setup(){
     gameOver=false;
-    eDirection = STOP;
+    snakeDirection = STOP;
     snakeX = width / 2;
     snakeY = height / 2;
     fruitX = rand() %width;
@@ -58,22 +59,39 @@ void Input(){
     if (_kbhit()) {
         switch(_getch()) {
         case dirUpChar:
-            eDirection = UP;
+            snakeDirection = UP;
             break;
         case dirDownChar:
-            eDirection = DOWN;
+            snakeDirection = DOWN;
             break;
         case dirLeftChar:
-            eDirection = LEFT;
+            snakeDirection = LEFT;
             break;
         case dirRightChar:
-            eDirection = RIGHT;
+            snakeDirection = RIGHT;
+            break;
+        default:
             break;
         }
     }
 }
 void Logic(){
-    
+    switch(snakeDirection) {
+        case UP:
+            snakeY--;
+            break;
+        case DOWN:
+            snakeY++;
+            break;
+        case LEFT:
+            snakeX--;
+            break;
+        case RIGHT:
+            snakeX++;
+            break;
+        default:
+            break;
+    }
 }
 
 int main(){
