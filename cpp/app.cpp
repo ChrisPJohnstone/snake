@@ -7,7 +7,8 @@ using namespace std;
 
 bool gameOver;
 const char wallChar = '#';
-const char snakeHeadChar = '0';
+const char snakeHeadChar = 'O';
+const char snakeTailChar = 'o';
 const char fruitChar = 'F';
 
 const int boardHeight = 20;
@@ -26,6 +27,7 @@ enum eDirection {
 };
 
 int snakeX, snakeY, fruitX, fruitY, score;
+int tailX[100], tailY[100], nTail;
 eDirection snakeDirection;
 
 void Setup(){
@@ -50,7 +52,16 @@ void Draw(){
             } else if (row == fruitY && column == fruitX) {
                 cout << fruitChar;
             } else {
-                cout << " ";
+                bool tailSpace = false;
+                for (int k = 0; k < nTail; k++) {
+                    if (row == tailY[k] && column == tailX[k]) {
+                        cout << snakeTailChar;
+                        tailSpace = true;
+                    }
+                }
+                if (!tailSpace) {
+                    cout << " ";
+                }
             }
         }
         cout << endl;
@@ -79,6 +90,21 @@ void Input(){
 }
 
 void Logic(){
+    int prevX = tailX[0];
+    int prevY = tailY[0];
+    tailX[0] = snakeX;
+    tailY[0] = snakeY;
+    int prevX2, prevY2;
+    
+    for (int i = 1; i < nTail; i++) {
+        prevX2 = tailX[i];
+        prevY2 = tailY[i];
+        tailX[i] = prevX;
+        tailY[i] = prevY;
+        prevX = prevX2;
+        prevY = prevY2;
+    }
+    
     switch(snakeDirection) {
         case UP:
             snakeY--;
@@ -104,9 +130,16 @@ void Logic(){
     ) {
         gameOver = true;
     } else if (snakeX == fruitX && snakeY == fruitY) {
+        nTail += 1;
         score += 10;
         fruitX = (rand() % (boardWidth - 1)) + 1;
         fruitY = (rand() % (boardHeight - 1)) + 1;
+    } else {
+        for (int i = 0; i < nTail; i++) {
+            if (snakeX == tailX[i] && snakeY == tailY[i]) {
+                gameOver = true;
+            }
+        }
     }
 }
 
